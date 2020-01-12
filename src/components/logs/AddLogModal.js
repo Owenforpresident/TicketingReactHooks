@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 
 const AddLogModal = () => {
   const [message, setMessage] = useState("");
@@ -35,7 +37,7 @@ const AddLogModal = () => {
             <select
               name="tech"
               value={tech}
-              className="borwser-default"
+              className="browser-default"
               onChange={e => setTech(e.target.value)}
             >
               <option value="" disabled>

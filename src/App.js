@@ -7,6 +7,8 @@ import Logs from "./components/logs/Logs";
 import AddBtn from "./components/layouts/AddBtn";
 import AddLogModal from "./components/logs/AddLogModal";
 import EditLogModal from "./components/logs/EditLogModal";
+import AddTechModal from "./components/techs/AddTechModal";
+import TechListModal from "./components/techs/TechListModal";
 
 //functional component
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <AddLogModal />
         <EditLogModal />
         <AddBtn />
+        <AddTechModal/>
+        <TechListModal/>
       </div>
     </Fragment>
   );
