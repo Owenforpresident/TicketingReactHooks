@@ -1,37 +1,20 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect} from 'react'
+import {connect} from 'react-redux'
 import LogItem from './LogItem';
+import {getLogs} from '../../actions/logActions' //so we can call this action
 //Function component
 //called logs
- const Logs = () => {
-//this is where we are setting component level state 
-//const, the the state variabe, the function for changing state, and useState 
-//useState below is setting the logs state variable to an empty array
-    const [logs, setLogs]= useState([]);
-    //setting the loading state variable to false 
-    const [loading, setLoading]= useState(false);
-//making an api call using the getlogs function
-//when the component mounts
-    useEffect(()=> {
+ const Logs = ({log: {logs, loading}, getLogs}) => {  //passing the app level state "mapped" prop of log into the component, pulling out logs and loading for convienence 
+    useEffect(() => {                            //remember actions that are brough in are props as well!!***Important
         getLogs();
     }, []); 
-//getLogs is an async function
-//sets the loading variable in state to true
-// makes the API call and formats it in JSON
-//Sets the state variable of data to the JSON response 
-//sets loading back to false too
-const getLogs = async () => {
-    setLoading(true);
-    const res = await fetch('http://localhost:8081/logs');
-    const data = await res.json(); 
-    setLogs(data); 
-    setLoading(false); 
-};
+
 
 //While makling API calls
 //loading it set to true
 //therefore this function runs and 
 //tells the users Loading. . .
-if(loading) {
+if(loading || logs === null) {
     return <h2>Loading. . .</h2>
 }
 //materialise collection
@@ -53,4 +36,9 @@ if(loading) {
     )
 }
 
-export default Logs; 
+const mapStateToProps = state => ({         //this is how the component accesses app level state
+    log:state.log                           //we arbitrarily name a prop log, then set it to state.log 
+})      //state.log refers to the log part of app level state built in the logReducer 
+//this component can now acess the app level state through the prop log 
+
+export default connect(mapStateToProps, {getLogs})(Logs);//second argument is an object of any actions that are needed to be called in this component

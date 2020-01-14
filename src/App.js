@@ -9,6 +9,8 @@ import AddLogModal from "./components/logs/AddLogModal";
 import EditLogModal from "./components/logs/EditLogModal";
 import AddTechModal from "./components/techs/AddTechModal";
 import TechListModal from "./components/techs/TechListModal";
+import {Provider} from 'react-redux';  //provides the store (which contains app level states) to components
+import store from './store' //files where root reducer, create store, initial state are all combined to make the app level state
 
 //functional component
 function App() {
@@ -22,8 +24,9 @@ function App() {
   //function just returns the
   //components like before but no render
   return (
+    <Provider store= {store} > 
     <Fragment>
-      <SearchBar />
+       <SearchBar />
       <div className="container">
         <Logs />
         <AddLogModal />
@@ -33,6 +36,7 @@ function App() {
         <TechListModal/>
       </div>
     </Fragment>
+    </Provider>
   );
 }
 export default App;
