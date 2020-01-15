@@ -15,7 +15,7 @@ import {getLogs} from '../../actions/logActions' //so we can call this action
 //therefore this function runs and 
 //tells the users Loading. . .
 if(loading || logs === null) {
-    return <h2>Loading. . .</h2>
+    return <h2>Loading. . .</h2> 
 }
 //materialise collection
 //if not loading and the length of the 

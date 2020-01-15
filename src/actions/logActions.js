@@ -23,8 +23,38 @@ import {
     };
   };
 
-  export const setLoading = () => {     //straight forward action, sends action type of set loading to the logreducer
-    return {
-      type: SET_LOADING                 //in the log reducer the state will be then changed, no payload necessary
+  
+  export const addLogs = (log) => {        //function that actually performs the actions
+    return async (dispatch) => {      // an async function w/ dispatch as an argument, sending an action w/  of setLoading to the logReducer (which will then be evaluated in a switch statement and manipulate state)
+      setLoading();                 //calls the setloading action(doesn't have to be a component that calls actions)
+      const res = await fetch('http://localhost:8081/logs', {
+        method:'POST',
+        body: JSON.stringify(log),     //API takes json stings 
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        
+      }, console.log(log)); 
+        // wait for the api call to backend using fetch to return
+      const data = await res.json();    //set the response to json and save it in a variable data
+      console.log(data);
+      dispatch({            //this is why we brought in dispatch to the function
+        type: ADD_LOG,     //dispatch an action type of getlogs to the logreducer and send along the info from the backend
+        payload: data       //the data will then be used by the logreducer to update the state 
+      });
     };
   };
+
+  export const deleteLogs = (id) => {
+    return async(dispatch) => { setLoading();
+    const res= await fetch(`http://localhost:8081/logs/${id}`, {method:'DELETE'})
+    dispatch({ type: DELETE_LOG, payload: id })
+  } 
+}
+
+// Set loading to true
+export const setLoading = () => {
+  return {
+    type: SET_LOADING
+  };
+};
